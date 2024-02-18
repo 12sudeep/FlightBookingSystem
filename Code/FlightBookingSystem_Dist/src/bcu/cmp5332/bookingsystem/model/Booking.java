@@ -13,6 +13,12 @@ public class Booking {
         // TODO: implementation here
         
     }
+
+
+	public Flight getFlight() {
+		// TODO Auto-generated method stub
+		return null;
+	}
     
     // TODO: implementation of Getter and Setter methods
     
