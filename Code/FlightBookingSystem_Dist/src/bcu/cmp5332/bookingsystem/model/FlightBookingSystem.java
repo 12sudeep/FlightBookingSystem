@@ -19,6 +19,11 @@ public class FlightBookingSystem {
         List<Flight> out = new ArrayList<>(flights.values());
         return Collections.unmodifiableList(out);
     }
+    
+    public List<Customer> getCustomers() {
+        List<Customer> out = new ArrayList<>(customers.values());
+        return Collections.unmodifiableList(out);
+    }
 
     public Flight getFlightByID(int id) throws FlightBookingSystemException {
         if (!flights.containsKey(id)) {
@@ -29,7 +34,10 @@ public class FlightBookingSystem {
 
     public Customer getCustomerByID(int id) throws FlightBookingSystemException {
         // TODO: implementation here
-        return null;
+        if (!customers.containsKey(id)) {
+        	throw new FlightBookingSystemException("There is no customer with that Id.");
+        }
+        return customers.get(id);
     }
 
     public void addFlight(Flight flight) throws FlightBookingSystemException {
@@ -46,7 +54,11 @@ public class FlightBookingSystem {
         flights.put(flight.getId(), flight);
     }
 
-    public void addCustomer(Customer customer) {
+    public void addCustomer(Customer customer) throws FlightBookingSystemException {
         // TODO: implementation here
+    	if (customers.containsKey(customer.getId())) {
+    		throw new IllegalArgumentException("Duplicate customer ID.");
+    	}
+    	customers.put(customer.getId(),customer);
     }
 }
