@@ -2,6 +2,7 @@ package bcu.cmp5332.bookingsystem.main;
 
 import bcu.cmp5332.bookingsystem.commands.LoadGUI;
 import bcu.cmp5332.bookingsystem.commands.ListFlights;
+import bcu.cmp5332.bookingsystem.commands.AddBooking;
 import bcu.cmp5332.bookingsystem.commands.AddCustomer;
 import bcu.cmp5332.bookingsystem.commands.AddFlight;
 import bcu.cmp5332.bookingsystem.commands.Command;
@@ -67,7 +68,7 @@ public class CommandParser {
                 
 
                 if (cmd.equals("addbooking")) {
-                    
+                	return new AddBooking(Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), LocalDate.now());
                 } else if (cmd.equals("editbooking")) {
                     
                 } else if (cmd.equals("cancelbooking")) {

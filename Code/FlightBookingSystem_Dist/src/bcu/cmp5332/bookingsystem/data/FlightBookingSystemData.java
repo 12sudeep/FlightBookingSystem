@@ -19,7 +19,7 @@ public class FlightBookingSystemData {
         /* Uncomment the two lines below when the implementation of their 
         loadData() and storeData() methods is complete */
          dataManagers.add(new CustomerDataManager());
-        // dataManagers.add(new BookingDataManager());
+         dataManagers.add(new BookingDataManager());
     }
     
     public static FlightBookingSystem load() throws FlightBookingSystemException, IOException {

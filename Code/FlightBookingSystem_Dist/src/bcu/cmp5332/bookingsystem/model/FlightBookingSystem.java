@@ -10,6 +10,7 @@ public class FlightBookingSystem {
     
     private final Map<Integer, Customer> customers = new TreeMap<>();
     private final Map<Integer, Flight> flights = new TreeMap<>();
+    private final List<Booking> bookings = new ArrayList<>();
 
     public LocalDate getSystemDate() {
         return systemDate;
@@ -23,6 +24,10 @@ public class FlightBookingSystem {
     public List<Customer> getCustomers() {
         List<Customer> out = new ArrayList<>(customers.values());
         return Collections.unmodifiableList(out);
+    }
+    
+    public List<Booking> getBookings() {
+    	return Collections.unmodifiableList(bookings);
     }
 
     public Flight getFlightByID(int id) throws FlightBookingSystemException {
@@ -61,4 +66,18 @@ public class FlightBookingSystem {
     	}
     	customers.put(customer.getId(),customer);
     }
+    
+    public void addBooking(Booking booking) throws FlightBookingSystemException {
+        // Check if the booking conflicts with existing bookings for the same flight
+        Flight flight = booking.getFlight();
+        for (Booking existingBooking : bookings) {
+            if (existingBooking.getFlight().equals(flight) && 
+                existingBooking.getBookingDate().equals(booking.getBookingDate())) {
+                throw new FlightBookingSystemException("Duplicate flight booking.");
+            }
+        }
+
+        bookings.add(booking);
+    }
 }
+
