@@ -19,8 +19,7 @@ public class AddBooking implements Command {
     }
 
     @Override
-    public void execute(FlightBookingSystem flightBookingSystem) throws FlightBookingSystemException {
-    	
+    public void execute(FlightBookingSystem flightBookingSystem) throws FlightBookingSystemException {    	
     	Booking booking = new Booking(
     			flightBookingSystem.getCustomerByID(customerId), 
     			flightBookingSystem.getFlightByID(flightId), 

@@ -1,6 +1,8 @@
 package bcu.cmp5332.bookingsystem.main;
 
 import bcu.cmp5332.bookingsystem.commands.LoadGUI;
+import bcu.cmp5332.bookingsystem.commands.ShowCustomer;
+import bcu.cmp5332.bookingsystem.commands.ShowFlight;
 import bcu.cmp5332.bookingsystem.commands.ListFlights;
 import bcu.cmp5332.bookingsystem.commands.AddBooking;
 import bcu.cmp5332.bookingsystem.commands.AddCustomer;
@@ -60,19 +62,18 @@ public class CommandParser {
                 int id = Integer.parseInt(parts[1]);
 
                 if (cmd.equals("showflight")) {
+                	
+                	return new ShowFlight(id);
                     
                 } else if (cmd.equals("showcustomer")) {
-                    
+                	return new ShowCustomer(id);
                 }
             } else if (parts.length == 3) {
                 
-
                 if (cmd.equals("addbooking")) {
                 	return new AddBooking(Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), LocalDate.now());
                 } else if (cmd.equals("editbooking")) {
-                    
                 } else if (cmd.equals("cancelbooking")) {
-                    
                 }
             }
         } catch (NumberFormatException ex) {
