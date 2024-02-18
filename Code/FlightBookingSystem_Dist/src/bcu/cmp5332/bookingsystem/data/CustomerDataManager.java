@@ -3,9 +3,11 @@ package bcu.cmp5332.bookingsystem.data;
 import bcu.cmp5332.bookingsystem.main.FlightBookingSystemException;
 import bcu.cmp5332.bookingsystem.model.Customer;
 import bcu.cmp5332.bookingsystem.model.FlightBookingSystem;
+import java.io.IOException;
 import java.util.Scanner;
 import java.io.File;
-import java.io.IOException;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 
 public class CustomerDataManager implements DataManager {
 
@@ -37,5 +39,13 @@ public class CustomerDataManager implements DataManager {
     @Override
     public void storeData(FlightBookingSystem fbs) throws IOException {
         // TODO: implementation here
+        try (PrintWriter out = new PrintWriter(new FileWriter(RESOURCE))) {
+            for (Customer customer : fbs.getCustomers()) {
+                out.print(customer.getId() + SEPARATOR);
+                out.print(customer.getName() + SEPARATOR);
+                out.print(customer.getPhone() + SEPARATOR);
+                out.println();
+            }
+        }
     }
 }
