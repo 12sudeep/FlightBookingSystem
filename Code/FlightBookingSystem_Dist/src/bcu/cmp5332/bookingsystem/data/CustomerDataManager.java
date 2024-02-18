@@ -1,8 +1,10 @@
 package bcu.cmp5332.bookingsystem.data;
 
 import bcu.cmp5332.bookingsystem.main.FlightBookingSystemException;
+import bcu.cmp5332.bookingsystem.model.Customer;
 import bcu.cmp5332.bookingsystem.model.FlightBookingSystem;
-
+import java.util.Scanner;
+import java.io.File;
 import java.io.IOException;
 
 public class CustomerDataManager implements DataManager {
@@ -12,6 +14,24 @@ public class CustomerDataManager implements DataManager {
     @Override
     public void loadData(FlightBookingSystem fbs) throws IOException, FlightBookingSystemException {
         // TODO: implementation here
+    	try (Scanner sc = new Scanner(new File(RESOURCE))) {
+            int lineIdx = 1;
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine();
+                String[] properties = line.split(SEPARATOR, -1);
+                try {
+                    int customerId = Integer.parseInt(properties[0]);
+                    String customerName = properties[1];
+                    String customerPhoneNumber = properties[2];
+                    Customer customer = new Customer(customerId, customerName, customerPhoneNumber);
+                    fbs.addCustomer(customer);
+                } catch (NumberFormatException | ArrayIndexOutOfBoundsException ex) {
+                    throw new FlightBookingSystemException("Unable to parse customer data on line " + lineIdx
+                            + "\nError: " + ex.getMessage());
+                }
+                lineIdx++;
+            }
+        }
     }
 
     @Override
