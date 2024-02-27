@@ -7,11 +7,13 @@ public class Booking {
     private Customer customer;
     private Flight flight;
     private LocalDate bookingDate;
+    private boolean status;
     
-    public Booking(Customer customer, Flight flight, LocalDate bookingDate) {
+    public Booking(Customer customer, Flight flight, LocalDate bookingDate, boolean status) {
         this.customer = customer;
         this.flight = flight;
         this.bookingDate = bookingDate;
+        this.status = status;
     }
     
     public Customer getCustomer() {
@@ -37,4 +39,14 @@ public class Booking {
     public void setBookingDate(LocalDate bookingDate) {
         this.bookingDate = bookingDate;
     }
+    
+    public boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+    
+    
 }

@@ -25,8 +25,9 @@ public class BookingDataManager implements DataManager {
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
                 String[] properties = line.split(SEPARATOR, -1);
-                try {
-                    int customerId = Integer.parseInt(properties[0]);
+                boolean status = Boolean.parseBoolean(properties[3]);                try {
+                    
+                	int customerId = Integer.parseInt(properties[0]);
                     int flightId = Integer.parseInt(properties[1]);
                     LocalDate bookingDate = LocalDate.parse(properties[2]);
 
@@ -35,7 +36,7 @@ public class BookingDataManager implements DataManager {
                     Flight flight = fbs.getFlightByID(flightId);
 
                     // Create booking object and add to FlightBookingSystem
-                    Booking booking = new Booking(customer, flight, bookingDate);
+                    Booking booking = new Booking(customer, flight, bookingDate, status);
                     fbs.addBooking(booking);
                 } catch (NumberFormatException ex) {
                     throw new FlightBookingSystemException("Unable to parse booking data on line " + line_idx
@@ -53,6 +54,8 @@ public class BookingDataManager implements DataManager {
                 out.print(booking.getCustomer().getId() + SEPARATOR);
                 out.print(booking.getFlight().getId() + SEPARATOR);
                 out.print(booking.getBookingDate() + SEPARATOR);
+                
+                out.print(booking.getStatus() ? "1" : "0");
                 out.println();
             }
         }

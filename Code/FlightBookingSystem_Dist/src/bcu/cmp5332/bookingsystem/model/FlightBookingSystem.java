@@ -44,6 +44,15 @@ public class FlightBookingSystem {
         }
         return customers.get(id);
     }
+    
+    public Booking getBookingById(int customerId, int flightId) throws FlightBookingSystemException {
+        for (Booking booking : bookings) {
+            if (booking.getCustomer().getId() == customerId && booking.getFlight().getId() == flightId) {
+                return booking;
+            }
+        }
+        throw new FlightBookingSystemException("Booking not found for customer ID " + customerId + " and flight ID " + flightId);
+    }
 
     public void addFlight(Flight flight) throws FlightBookingSystemException {
         if (flights.containsKey(flight.getId())) {
@@ -70,14 +79,23 @@ public class FlightBookingSystem {
     public void addBooking(Booking booking) throws FlightBookingSystemException {
         // Check if the booking conflicts with existing bookings for the same flight
         Flight flight = booking.getFlight();
+        Customer customer = booking.getCustomer();
+        LocalDate bookingDate = booking.getBookingDate();
         for (Booking existingBooking : bookings) {
             if (existingBooking.getFlight().equals(flight) && 
-                existingBooking.getBookingDate().equals(booking.getBookingDate())) {
-                throw new FlightBookingSystemException("Duplicate flight booking.");
+                existingBooking.getBookingDate().equals(bookingDate) &&
+                existingBooking.getCustomer().equals(customer)) {
+                throw new FlightBookingSystemException("This flight for " + customer.getName() + " on " + bookingDate + " is already booked.");
             }
         }
 
         bookings.add(booking);
     }
-}
+    
+    public void removeBooking(Booking booking) {
+        bookings.remove(booking);
+    }
+    }
+    
+
 
