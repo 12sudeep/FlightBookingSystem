@@ -1,5 +1,10 @@
 package bcu.cmp5332.bookingsystem.model;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.time.LocalDate;
+
 import bcu.cmp5332.bookingsystem.main.FlightBookingSystemException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +22,44 @@ public class Customer {
     	this.name=name;
     	this.phone=phone;
     }
+    
+    public void populateBookings(FlightBookingSystem flightBookingSystem) throws FlightBookingSystemException {
+	    try {
+	        BufferedReader bookingsReader = new BufferedReader(new FileReader("./resources/data/bookings.txt"));
+	        String bookingLine;
+	        
+	        while ((bookingLine = bookingsReader.readLine()) != null) {
+	            String[] bookingData = bookingLine.split("::");
+	            int customerId = Integer.parseInt(bookingData[0]);
+	            int flightId = Integer.parseInt(bookingData[1]);
+	
+	            if (customerId == this.id) {
+	                // Assuming you have a method to get Flight based on flightId
+	                Flight flight = flightBookingSystem.getFlightByID(flightId);
+	                LocalDate bookingDate = LocalDate.parse(bookingData[2]);
+	
+	                // Check if the booking already exists
+	                boolean bookingExists = false;
+	                for (Booking existingBooking : bookings) {
+	                    if (existingBooking.getFlight().getId() == flightId && existingBooking.getBookingDate().equals(bookingDate)) {
+	                        bookingExists = true;
+	                        break;
+	                    }
+	                }
+	
+	                // If the booking doesn't exist, add it
+	                if (!bookingExists) {
+	                    Booking booking = new Booking(this, flight, bookingDate);
+	                    bookings.add(booking);
+	                }
+	            }
+	        }
+	        bookingsReader.close();
+	    } catch (IOException | NumberFormatException ex) {
+	        ex.printStackTrace(); // Handle error appropriately
+	    }
+	}
+
     
     // TODO: implementation of Getter and Setter methods
     

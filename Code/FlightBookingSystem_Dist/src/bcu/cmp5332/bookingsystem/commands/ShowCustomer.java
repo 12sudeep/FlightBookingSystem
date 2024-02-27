@@ -21,6 +21,7 @@ public class ShowCustomer implements Command {
         System.out.println("Name: " + customer.getName());
         System.out.println("Phone Number: " + customer.getPhone());
 
+        customer.populateBookings(flightBookingSystem);
         System.out.println("Bookings:");
         for (Booking booking : customer.getBookings()) {
             Flight flight = booking.getFlight();
