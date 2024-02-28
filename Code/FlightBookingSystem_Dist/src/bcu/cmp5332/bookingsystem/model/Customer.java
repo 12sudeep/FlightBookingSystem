@@ -23,7 +23,7 @@ public class Customer {
     	this.phone=phone;
     }
     
-    public void populateBookings(FlightBookingSystem flightBookingSystem) throws FlightBookingSystemException {
+    public void populate(FlightBookingSystem flightBookingSystem) throws FlightBookingSystemException {
 	    try {
 	        BufferedReader bookingsReader = new BufferedReader(new FileReader("./resources/data/bookings.txt"));
 	        String bookingLine;

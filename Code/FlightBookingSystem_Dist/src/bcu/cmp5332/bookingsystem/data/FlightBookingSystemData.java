@@ -3,6 +3,8 @@ package bcu.cmp5332.bookingsystem.data;
 
 
 import bcu.cmp5332.bookingsystem.main.FlightBookingSystemException;
+import bcu.cmp5332.bookingsystem.model.Customer;
+import bcu.cmp5332.bookingsystem.model.Flight;
 import bcu.cmp5332.bookingsystem.model.FlightBookingSystem;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,6 +30,17 @@ public class FlightBookingSystemData {
         for (DataManager dm : dataManagers) {
             dm.loadData(fbs);
         }
+        
+        List<Customer> customersList = fbs.getCustomers();
+        for (Customer customer : customersList) {
+            customer.populate(fbs);
+        }
+        
+        List<Flight> flightsList = fbs.getFlights();
+        for (Flight flight : flightsList) {
+        	flight.populate(fbs);
+        }
+        
         return fbs;
     }
 

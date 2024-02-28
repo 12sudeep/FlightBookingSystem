@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import bcu.cmp5332.bookingsystem.main.FlightBookingSystemException;
+//import bcu.cmp5332.bookingsystem.main.FlightBookingSystemException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import bcu.cmp5332.bookingsystem.main.FlightBookingSystemException;
+
 public class Flight {
     
     private int id;
@@ -21,8 +23,7 @@ public class Flight {
     private String origin;
     private String destination;
     private LocalDate departureDate;
-
-    private final Map<Integer, List<Customer>> passengersByFlight;
+    private final List<Customer> passengers = new ArrayList<>();
 
     public Flight(int id, String flightNumber, String origin, String destination, LocalDate departureDate) {
         this.id = id;
@@ -31,36 +32,22 @@ public class Flight {
         this.destination = destination;
         this.departureDate = departureDate;
         
-        passengersByFlight  = new HashMap<>();
-        populatePassengers();
     }
     
-    private void populatePassengers() {
+    public void populate(FlightBookingSystem fbs) throws FlightBookingSystemException {
         try {
-            // Read bookings.txt
             BufferedReader bookingsReader = new BufferedReader(new FileReader("./resources/data/bookings.txt"));
             String bookingLine;
+
             while ((bookingLine = bookingsReader.readLine()) != null) {
                 String[] bookingData = bookingLine.split("::");
                 int customerId = Integer.parseInt(bookingData[0]);
                 int flightId = Integer.parseInt(bookingData[1]);
 
-                // Read customers.txt to get customer details
-                BufferedReader customersReader = new BufferedReader(new FileReader("./resources/data/customers.txt"));
-                String customerLine;
-                while ((customerLine = customersReader.readLine()) != null) {
-                    String[] customerData = customerLine.split("::");
-                    if (Integer.parseInt(customerData[0]) == customerId) {
-                        String customerName = customerData[1];
-                        String phoneNumber = customerData[2];
-                        Customer customer = new Customer(customerId, customerName, phoneNumber);
-
-                        // Add customer to the passengers of the flight
-                        passengersByFlight.computeIfAbsent(flightId, k -> new ArrayList<>()).add(customer);
-                        break;
-                    }
+                if (flightId == this.id) {
+                	Customer customer = fbs.getCustomerByID(customerId);
+                    passengers.add(customer);
                 }
-                customersReader.close();
             }
             bookingsReader.close();
         } catch (IOException | NumberFormatException ex) {
@@ -109,8 +96,7 @@ public class Flight {
     }
 
     public List<Customer> getPassengers() {
-        List<Customer> passengers = passengersByFlight.getOrDefault(this.id, Collections.emptyList());
-        return new ArrayList<>(passengers);
+        return passengers;
     }
 	
     public String getDetailsShort() {
