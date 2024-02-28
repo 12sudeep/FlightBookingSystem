@@ -72,7 +72,7 @@ public class CommandParser {
             } else if (parts.length == 3) {
                 
                 if (cmd.equals("addbooking")) {
-                	return new AddBooking(Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), LocalDate.now(), true);
+                	return new AddBooking(Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), LocalDate.now(), 1);
                 } else if (cmd.equals("editbooking")) {
                 } else if (cmd.equals("cancelbooking")) {
                     return new CancelBooking(Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));

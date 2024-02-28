@@ -20,7 +20,7 @@ public class CancelBooking implements Command {
         Booking booking = flightBookingSystem.getBookingById(customerId, flightId);
         
         // Set the status of the booking to "cancel"
-        booking.setStatus(false);
+        booking.setStatus(0);
         
         // Remove the booking from the system
 //        flightBookingSystem.removeBooking(booking);

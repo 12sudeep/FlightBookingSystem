@@ -11,9 +11,9 @@ public class AddBooking implements Command {
 	private final int customerId;
     private final int flightId;
     private final LocalDate bookingDate;
-    private final boolean status;
+    private final int status;
     
-    public AddBooking(int customerId, int flightId, LocalDate bookingDate, boolean status) {
+    public AddBooking(int customerId, int flightId, LocalDate bookingDate, int status) {
         this.customerId = customerId;
 		this.flightId = flightId;
         this.bookingDate = bookingDate;

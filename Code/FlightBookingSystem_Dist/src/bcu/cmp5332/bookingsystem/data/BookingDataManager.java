@@ -25,7 +25,9 @@ public class BookingDataManager implements DataManager {
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
                 String[] properties = line.split(SEPARATOR, -1);
-                boolean status = Boolean.parseBoolean(properties[3]);                try {
+                int status = Integer.parseInt(properties[3]);    
+                
+                try {
                     
                 	int customerId = Integer.parseInt(properties[0]);
                     int flightId = Integer.parseInt(properties[1]);
@@ -55,7 +57,7 @@ public class BookingDataManager implements DataManager {
                 out.print(booking.getFlight().getId() + SEPARATOR);
                 out.print(booking.getBookingDate() + SEPARATOR);
                 
-                out.print(booking.getStatus() ? "1" : "0");
+                out.print(booking.getStatus() + SEPARATOR);
                 out.println();
             }
         }
