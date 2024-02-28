@@ -11,11 +11,13 @@ public class AddBooking implements Command {
 	private final int customerId;
     private final int flightId;
     private final LocalDate bookingDate;
+    private final int status;
     
-    public AddBooking(int customerId, int flightId, LocalDate bookingDate) {
+    public AddBooking(int customerId, int flightId, LocalDate bookingDate, int status) {
         this.customerId = customerId;
 		this.flightId = flightId;
-        this.bookingDate = bookingDate;		
+        this.bookingDate = bookingDate;
+        this.status=status;
     }
 
     @Override
@@ -23,7 +25,7 @@ public class AddBooking implements Command {
     	Booking booking = new Booking(
     			flightBookingSystem.getCustomerByID(customerId), 
     			flightBookingSystem.getFlightByID(flightId), 
-    			bookingDate
+    			bookingDate, status
     		);
         flightBookingSystem.addBooking(booking);
         System.out.println("Booking for " + flightBookingSystem.getCustomerByID(customerId).getName() + " added.");

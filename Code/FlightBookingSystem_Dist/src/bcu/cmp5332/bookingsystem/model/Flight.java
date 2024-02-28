@@ -113,4 +113,11 @@ public class Flight {
     public void addPassenger(Customer passenger) {
         
     }
+    
+    public void removePassenger(Customer passenger) throws FlightBookingSystemException {
+        if (!passengers.contains(passenger)) {
+            throw new FlightBookingSystemException("Passenger " + passenger.getName() + " is not booked on this flight.");
+        }
+        passengers.remove(passenger);
+    }
 }
