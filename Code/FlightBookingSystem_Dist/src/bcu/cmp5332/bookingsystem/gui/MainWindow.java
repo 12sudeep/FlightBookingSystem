@@ -1,6 +1,8 @@
 package bcu.cmp5332.bookingsystem.gui;
 
 import bcu.cmp5332.bookingsystem.data.FlightBookingSystemData;
+import bcu.cmp5332.bookingsystem.model.Booking;
+import bcu.cmp5332.bookingsystem.model.Customer;
 import bcu.cmp5332.bookingsystem.model.Flight;
 import bcu.cmp5332.bookingsystem.model.FlightBookingSystem;
 import java.awt.event.ActionEvent;
@@ -170,7 +172,7 @@ public class MainWindow extends JFrame implements ActionListener {
             
             
         } else if (ae.getSource() == custView) {
-            
+        	displayCustomers();
             
         } else if (ae.getSource() == custAdd) {
             
@@ -180,7 +182,8 @@ public class MainWindow extends JFrame implements ActionListener {
             
         }
     }
-
+    
+  
     public void displayFlights() {
         List<Flight> flightsList = fbs.getFlights();
         // headers for the table
@@ -200,4 +203,26 @@ public class MainWindow extends JFrame implements ActionListener {
         this.getContentPane().add(new JScrollPane(table));
         this.revalidate();
     }	
+    
+    public void displayCustomers() {
+        List<Customer> customersList = fbs.getCustomers();
+        // headers for the table
+        String[] columns = new String[]{"ID", "Name", "Email", "Phone", "Bookings"};
+
+        Object[][] data = new Object[customersList.size()][5];
+        for (int i = 0; i < customersList.size(); i++) {
+            Customer customer = customersList.get(i);
+            data[i][0] = customer.getId();
+            data[i][1] = customer.getName();
+            data[i][2] = customer.getEmail();
+            data[i][3] = customer.getPhone();
+            data[i][4] = customer.getBookings().size(); 
+        }
+
+        JTable table = new JTable(data, columns);
+        
+        this.getContentPane().removeAll();
+        this.getContentPane().add(new JScrollPane(table));
+        this.revalidate();
+    }
 }
