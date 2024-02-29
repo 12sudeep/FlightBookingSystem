@@ -103,7 +103,7 @@ public class AddCustomerWindow extends JFrame implements ActionListener {
             addCustomer.execute(mw.getFlightBookingSystem());
 
             // Refresh the view with the list of customers
-            // mw.displayCustomers();
+             mw.displayCustomers();
 
             // Hide (close) the AddCustomerWindow
             this.setVisible(false);

@@ -23,12 +23,15 @@ public class ShowCustomer implements Command {
         System.out.println("Email: " + customer.getEmail());
 
         System.out.println("Bookings:");
+        if (customer.getBookings().isEmpty()) {
+            System.out.println("No bookings made.");
+        } else {
         for (Booking booking : customer.getBookings()) {
             Flight flight = booking.getFlight();
             System.out.println("Flight Number: " + flight.getFlightNumber());
             System.out.println("Origin: " + flight.getOrigin());
             System.out.println("Destination: " + flight.getDestination());
             System.out.println("Departure Date: " + flight.getDepartureDate());
-        }
+        }}
     }
 }

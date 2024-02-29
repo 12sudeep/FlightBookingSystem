@@ -221,9 +221,42 @@ public class MainWindow extends JFrame implements ActionListener {
         }
 
         JTable table = new JTable(data, columns);
-        
+        table.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                int selectedRow = table.getSelectedRow();
+                if (selectedRow != -1) {
+                    int customerId = (int) table.getValueAt(selectedRow, 0);
+                    try {
+						displayBookingDetails(customerId);
+					} catch (FlightBookingSystemException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+                }
+            }
+        });
         this.getContentPane().removeAll();
         this.getContentPane().add(new JScrollPane(table));
         this.revalidate();
+    }
+    
+    public void displayBookingDetails(int customerId) throws FlightBookingSystemException {
+        Customer customer = fbs.getCustomerByID(customerId);
+        StringBuilder bookingDetails = new StringBuilder();
+        bookingDetails.append("Customer ID: ").append(customer.getId()).append("\n");
+        bookingDetails.append("Bookings: \n");
+        if (customer.getBookings().isEmpty()) {
+        	bookingDetails.append("No bookings made.");
+        } else {
+        int bookingNumber = 1;
+        for (Booking booking : customer.getBookings()) {
+        	bookingDetails.append(bookingNumber).append(": ").append("\n");
+            bookingDetails.append("Flight: ").append(booking.getFlight().getFlightNumber()).append("\n");
+            bookingDetails.append("Departure Date: ").append(booking.getFlight().getDepartureDate()).append("\n");
+            // Include other booking details as needed
+            bookingDetails.append("\n");
+            bookingNumber++;
+        }}
+        JOptionPane.showMessageDialog(this, bookingDetails.toString(), "Booking Details", JOptionPane.INFORMATION_MESSAGE);
     }
 }
