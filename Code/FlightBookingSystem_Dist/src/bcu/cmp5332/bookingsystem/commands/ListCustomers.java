@@ -11,7 +11,7 @@ public class ListCustomers implements Command {
     public void execute(FlightBookingSystem flightBookingSystem) {
         List<Customer> customers = flightBookingSystem.getCustomers();
         for (Customer customer : customers) {
-            System.out.println("Customer ID: " + customer.getId() + ", Name: " + customer.getName() + ", Phone: " + customer.getPhone());
+        	System.out.println("Customer ID: " + customer.getId() + ", Name: " + customer.getName() + ", Phone: " + customer.getPhone() + ", Email: " + customer.getEmail());
         }
         System.out.println(customers.size() + " customer(s)");
     }

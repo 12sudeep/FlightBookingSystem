@@ -36,12 +36,10 @@ public class Customer {
 	            int flightId = Integer.parseInt(bookingData[1]);
 	
 	            if (customerId == this.id) {
-	                // Assuming you have a method to get Flight based on flightId
 	                Flight flight = flightBookingSystem.getFlightByID(flightId);
 	                LocalDate bookingDate = LocalDate.parse(bookingData[2]);
 	                int status = Integer.parseInt(bookingData[3]);
 	
-	                // Check if the booking already exists
 	                boolean bookingExists = false;
 	                for (Booking existingBooking : bookings) {
 	                    if (existingBooking.getFlight().getId() == flightId && existingBooking.getBookingDate().equals(bookingDate)) {
@@ -50,7 +48,6 @@ public class Customer {
 	                    }
 	                }
 	
-	                // If the booking doesn't exist, add it
 	                if (!bookingExists) {
 	                    Booking booking = new Booking(this, flight, bookingDate, status);
 	                    bookings.add(booking);

@@ -12,7 +12,7 @@ public class ListFlights implements Command {
     public void execute(FlightBookingSystem flightBookingSystem) throws FlightBookingSystemException {
         List<Flight> flights = flightBookingSystem.getFlights();
         for (Flight flight : flights) {
-            System.out.println(flight.getDetailsShort());
+            System.out.println(flight.getDetailsLong());
         }
         System.out.println(flights.size() + " flight(s)");
     }
