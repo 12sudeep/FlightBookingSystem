@@ -3,6 +3,7 @@ package bcu.cmp5332.bookingsystem.gui;
 import bcu.cmp5332.bookingsystem.data.FlightBookingSystemData;
 import bcu.cmp5332.bookingsystem.model.Booking;
 import bcu.cmp5332.bookingsystem.model.Customer;
+import bcu.cmp5332.bookingsystem.main.FlightBookingSystemException;
 import bcu.cmp5332.bookingsystem.model.Flight;
 import bcu.cmp5332.bookingsystem.model.FlightBookingSystem;
 import java.awt.event.ActionEvent;
@@ -139,10 +140,10 @@ public class MainWindow extends JFrame implements ActionListener {
     }	
 
 /* Uncomment the following code to run the GUI version directly from the IDE */
-//    public static void main(String[] args) throws IOException, FlightBookingSystemException {
-//        FlightBookingSystem fbs = FlightBookingSystemData.load();
-//        new MainWindow(fbs);			
-//    }
+    public static void main(String[] args) throws IOException, FlightBookingSystemException {
+        FlightBookingSystem fbs = FlightBookingSystemData.load();
+        new MainWindow(fbs);			
+    }
 
 
 
@@ -175,7 +176,7 @@ public class MainWindow extends JFrame implements ActionListener {
         	displayCustomers();
             
         } else if (ae.getSource() == custAdd) {
-            
+        	new AddCustomerWindow(this);
             
         } else if (ae.getSource() == custDel) {
             
