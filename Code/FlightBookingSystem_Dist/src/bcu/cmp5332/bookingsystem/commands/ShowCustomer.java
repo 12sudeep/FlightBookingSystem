@@ -20,6 +20,7 @@ public class ShowCustomer implements Command {
         System.out.println("Customer ID: " + customer.getId());
         System.out.println("Name: " + customer.getName());
         System.out.println("Phone Number: " + customer.getPhone());
+        System.out.println("Email: " + customer.getEmail());
 
         System.out.println("Bookings:");
         for (Booking booking : customer.getBookings()) {
