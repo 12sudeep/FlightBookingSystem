@@ -10,11 +10,13 @@ public class AddCustomer implements Command {
 	private final int id;
     private final String name;
     private final String phone;
+    private final String email;
     
-    public AddCustomer(int id,String name, String phone) {
+    public AddCustomer(int id,String name, String phone, String email) {
         this.id = id;
 		this.name = name;
-        this.phone = phone;		
+        this.phone = phone;
+        this.email = email;
     }
 
     @Override
@@ -26,7 +28,7 @@ public class AddCustomer implements Command {
             maxId = flightBookingSystem.getCustomers().get(lastIndex).getId();
         }
 
-        Customer customer = new Customer(++maxId, name, phone);
+        Customer customer = new Customer(++maxId, name, phone,email);
         flightBookingSystem.addCustomer(customer);
         System.out.println("Customer #" + customer.getId() + " added.");
     }
