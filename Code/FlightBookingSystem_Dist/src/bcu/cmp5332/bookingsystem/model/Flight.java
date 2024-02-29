@@ -99,11 +99,23 @@ public class Flight {
 
     public String getDetailsLong() {
         // TODO: implementation here
-        return null;
+    	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/YYYY");
+        StringBuilder details = new StringBuilder();
+        details.append("Flight Number: ").append(flightNumber).append("\n");
+        details.append("Origin: ").append(origin).append("\n");
+        details.append("Destination: ").append(destination).append("\n");
+        details.append("Departure Date: ").append(departureDate.format(dtf)).append("\n");
+        details.append("Capacity: ").append(capacity).append("\n");
+        details.append("Price: ").append(price).append("\n");
+        details.append("Passengers:\n");
+        for (Customer passenger : passengers) {
+            details.append(passenger.getName()).append("\n");
+        }
+        return details.toString();
     }
     
     public void addPassenger(Customer passenger) {
-        
+    	passengers.add(passenger);
     }
     
     public void removePassenger(Customer passenger) throws FlightBookingSystemException {
