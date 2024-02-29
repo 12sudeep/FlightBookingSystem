@@ -39,6 +39,7 @@ public class MainWindow extends JFrame implements ActionListener {
     private JMenuItem custView;
     private JMenuItem custAdd;
     private JMenuItem custDel;
+    private JMenuItem custList;
 
     private FlightBookingSystem fbs;
 
@@ -112,10 +113,13 @@ public class MainWindow extends JFrame implements ActionListener {
         custView = new JMenuItem("View");
         custAdd = new JMenuItem("Add");
         custDel = new JMenuItem("Delete");
-
+        custList = new JMenuItem("List");
+        
         customersMenu.add(custView);
         customersMenu.add(custAdd);
         customersMenu.add(custDel);
+        customersMenu.add(custList); 
+        
         // adding action listener for Customers menu items
         custView.addActionListener(this);
         custAdd.addActionListener(this);
