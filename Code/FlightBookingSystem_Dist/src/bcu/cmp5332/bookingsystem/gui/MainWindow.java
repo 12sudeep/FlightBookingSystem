@@ -188,22 +188,50 @@ public class MainWindow extends JFrame implements ActionListener {
     public void displayFlights() {
         List<Flight> flightsList = fbs.getFlights();
         // headers for the table
-        String[] columns = new String[]{"Flight No", "Origin", "Destination", "Departure Date"};
+        String[] columns = new String[]{"Flight ID", "Flight No", "Origin", "Destination", "Departure Date"};
 
-        Object[][] data = new Object[flightsList.size()][6];
+        Object[][] data = new Object[flightsList.size()][5];
         for (int i = 0; i < flightsList.size(); i++) {
             Flight flight = flightsList.get(i);
-            data[i][0] = flight.getFlightNumber();
-            data[i][1] = flight.getOrigin();
-            data[i][2] = flight.getDestination();
-            data[i][3] = flight.getDepartureDate();
+            data[i][0] = flight.getId();
+            data[i][1] = flight.getFlightNumber();
+            data[i][2] = flight.getOrigin();
+            data[i][3] = flight.getDestination();
+            data[i][4] = flight.getDepartureDate();
         }
 
         JTable table = new JTable(data, columns);
+        table.getSelectionModel().addListSelectionListener(e -> {
+                if (!e.getValueIsAdjusting()) {
+                    int selectedRow = table.getSelectedRow();
+                    if (selectedRow != -1) {
+                        int flightId = (int) table.getValueAt(selectedRow, 0);
+                        try {
+                            displayPassengersForFlight(flightId);
+                        } catch (FlightBookingSystemException ex) {
+                            JOptionPane.showMessageDialog(MainWindow.this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                }
+            
+        });
+
         this.getContentPane().removeAll();
         this.getContentPane().add(new JScrollPane(table));
         this.revalidate();
     }	
+    
+    public void displayPassengersForFlight(int flightId) throws FlightBookingSystemException {
+        Flight flight = fbs.getFlightByID(flightId);
+        List<Customer> passengers = flight.getPassengers();
+        StringBuilder passengerDetails = new StringBuilder();
+        passengerDetails.append("Passengers for Flight ID: ").append(flightId).append("\n");
+        for (Customer passenger : passengers) {
+        	passengerDetails.append("ID: ").append(passenger.getId()).append(", ");
+            passengerDetails.append("Name: ").append(passenger.getName()).append("\n");
+        }
+        JOptionPane.showMessageDialog(this, passengerDetails.toString(), "Passengers for Flight", JOptionPane.INFORMATION_MESSAGE);
+    }
     
     public void displayCustomers() {
         List<Customer> customersList = fbs.getCustomers();
@@ -229,7 +257,6 @@ public class MainWindow extends JFrame implements ActionListener {
                     try {
 						displayBookingDetails(customerId);
 					} catch (FlightBookingSystemException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
                 }

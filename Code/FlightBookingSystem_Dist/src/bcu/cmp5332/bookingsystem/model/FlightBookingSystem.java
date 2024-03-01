@@ -53,6 +53,7 @@ public class FlightBookingSystem {
         }
         throw new FlightBookingSystemException("Booking not found for customer ID " + customerId + " and flight ID " + flightId);
     }
+    
 
     public void addFlight(Flight flight) throws FlightBookingSystemException {
         if (flights.containsKey(flight.getId())) {
@@ -95,6 +96,7 @@ public class FlightBookingSystem {
     public void removeBooking(Booking booking) {
         bookings.remove(booking);
     }
+
     }
     
 
