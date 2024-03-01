@@ -26,11 +26,12 @@ public class Flight {
     private LocalDate departureDate;
     private int capacity;
     private double price;
+    private double cancellationRebookFee;
     private int status;
     private final List<Customer> passengers = new ArrayList<>();
 
     public Flight(int id, String flightNumber, String origin, String destination, LocalDate departureDate, int capacity,
-            double price, int status) {
+            double price, double cancellationRebookFee, int status) {
         this.id = id;
         this.flightNumber = flightNumber;
         this.origin = origin;
@@ -38,6 +39,7 @@ public class Flight {
         this.departureDate = departureDate;
         this.capacity = capacity;
         this.price = price;
+        this.setCancellationRebookFee(cancellationRebookFee);
         this.setStatus(status);
     }
 
@@ -166,5 +168,13 @@ public class Flight {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public double getCancellationRebookFee() {
+		return cancellationRebookFee;
+	}
+
+	public void setCancellationRebookFee(double cancellationRebookFee) {
+		this.cancellationRebookFee = cancellationRebookFee;
 	}
 }

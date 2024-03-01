@@ -208,9 +208,9 @@ public class MainWindow extends JFrame implements ActionListener {
                                  .collect(Collectors.toList());
 
         // headers for the table
-        String[] columns = new String[]{"ID", "Flight No", "Origin", "Destination", "Departure Date", "Maximum Capacity", "Price"};
+        String[] columns = new String[]{"ID", "Flight No", "Origin", "Destination", "Departure Date", "Maximum Capacity", "Price", "Cancellation/Rebook fee"};
 
-        Object[][] data = new Object[flightsList.size()][7];
+        Object[][] data = new Object[flightsList.size()][8];
         
         for (int i = 0; i < flightsList.size(); i++) {
             Flight flight = flightsList.get(i);
@@ -221,6 +221,7 @@ public class MainWindow extends JFrame implements ActionListener {
             data[i][4] = flight.getDepartureDate();
             data[i][5] = flight.getCapacity();
             data[i][6] = flight.getPrice();
+            data[i][7] = flight.getCancellationRebookFee();
         }
 
         JTable table = new JTable(data, columns);

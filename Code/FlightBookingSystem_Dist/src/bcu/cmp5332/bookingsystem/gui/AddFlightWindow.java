@@ -28,6 +28,7 @@ public class AddFlightWindow extends JFrame implements ActionListener {
     private JTextField depDateText = new JTextField();
     private JTextField capacityText = new JTextField();
     private JTextField priceText = new JTextField();
+    private JTextField cancellationRebookFee = new JTextField();
 
     private JButton addBtn = new JButton("Add");
     private JButton cancelBtn = new JButton("Cancel");
@@ -65,6 +66,8 @@ public class AddFlightWindow extends JFrame implements ActionListener {
         topPanel.add(capacityText);
         topPanel.add(new JLabel("Price : "));
         topPanel.add(priceText);
+        topPanel.add(new JLabel("Cancellation/Rebook fee : "));
+        topPanel.add(cancellationRebookFee);
 
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new GridLayout(1, 3));
@@ -101,9 +104,10 @@ public class AddFlightWindow extends JFrame implements ActionListener {
             LocalDate departureDate = LocalDate.parse(depDateText.getText());
             int capacity = Integer.parseInt(capacityText.getText());
             double price = Double.parseDouble(priceText.getText());
+            double cancellationRebookPrice = Double.parseDouble(cancellationRebookFee.getText());
 
             // Create and execute the AddFlight Command
-            Command addFlight = new AddFlight(flightNumber, origin, destination, departureDate, capacity, price);
+            Command addFlight = new AddFlight(flightNumber, origin, destination, departureDate, capacity, price, cancellationRebookPrice);
             addFlight.execute(mw.getFlightBookingSystem());
 
             // Refresh the view with the list of flights

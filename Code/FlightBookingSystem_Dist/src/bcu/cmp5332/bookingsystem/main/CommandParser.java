@@ -40,8 +40,10 @@ public class CommandParser {
                 int capacity = Integer.parseInt(reader.readLine());
                 System.out.print("Price: ");
                 double price = Double.parseDouble(reader.readLine());
+                System.out.print("Cancellation/Rebok Fee: ");
+                double cancellationRebookFee = Double.parseDouble(reader.readLine());
                 
-                return new AddFlight(flightNumber, origin, destination, departureDate, capacity, price);
+                return new AddFlight(flightNumber, origin, destination, departureDate, capacity, price, cancellationRebookFee);
             
             } else if (cmd.equals("addcustomer")) {
             	BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
