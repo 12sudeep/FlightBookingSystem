@@ -196,15 +196,18 @@ public class MainWindow extends JFrame implements ActionListener {
                                  .collect(Collectors.toList());
 
         // headers for the table
-        String[] columns = new String[]{"Flight No", "Origin", "Destination", "Departure Date"};
+        String[] columns = new String[]{"ID", "Flight No", "Origin", "Destination", "Departure Date", "Maximum Capacity", "Price"};
 
-        Object[][] data = new Object[flightsList.size()][4];
+        Object[][] data = new Object[flightsList.size()][7];
         for (int i = 0; i < flightsList.size(); i++) {
             Flight flight = flightsList.get(i);
-            data[i][0] = flight.getFlightNumber();
-            data[i][1] = flight.getOrigin();
-            data[i][2] = flight.getDestination();
-            data[i][3] = flight.getDepartureDate();
+            data[i][0] = flight.getId();
+            data[i][1] = flight.getFlightNumber();
+            data[i][2] = flight.getOrigin();
+            data[i][3] = flight.getDestination();
+            data[i][4] = flight.getDepartureDate();
+            data[i][5] = flight.getCapacity();
+            data[i][6] = flight.getPrice();
         }
 
         JTable table = new JTable(data, columns);
