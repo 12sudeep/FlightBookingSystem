@@ -45,6 +45,15 @@ public class FlightBookingSystem {
         return customers.get(id);
     }
     
+    public Booking getBookingByCustomerId(int customerId) throws FlightBookingSystemException {
+        for (Booking booking : bookings) {
+            if (booking.getCustomer().getId() == customerId) {
+                return booking;
+            }
+        }
+        throw new FlightBookingSystemException("Booking not found for customer ID " + customerId);
+    }
+    
     public Booking getBookingById(int customerId, int flightId) throws FlightBookingSystemException {
         for (Booking booking : bookings) {
             if (booking.getCustomer().getId() == customerId && booking.getFlight().getId() == flightId) {
@@ -100,7 +109,9 @@ public class FlightBookingSystem {
         return LocalDate.now();
     }
 
-    }
+
+	}
+
 
 
     
