@@ -189,10 +189,16 @@ public class MainWindow extends JFrame implements ActionListener {
   
     public void displayFlights() {
         List<Flight> flightsList = fbs.getFlights();
+        
+        // Filter flights whose status is 1
+        flightsList = flightsList.stream()
+                                 .filter(flight -> flight.getStatus() == 1)
+                                 .collect(Collectors.toList());
+
         // headers for the table
         String[] columns = new String[]{"Flight No", "Origin", "Destination", "Departure Date"};
 
-        Object[][] data = new Object[flightsList.size()][6];
+        Object[][] data = new Object[flightsList.size()][4];
         for (int i = 0; i < flightsList.size(); i++) {
             Flight flight = flightsList.get(i);
             data[i][0] = flight.getFlightNumber();
@@ -205,7 +211,8 @@ public class MainWindow extends JFrame implements ActionListener {
         this.getContentPane().removeAll();
         this.getContentPane().add(new JScrollPane(table));
         this.revalidate();
-    }	
+    }
+	
     
     public void displayCustomers() {
         List<Customer> customersList = fbs.getCustomers();
