@@ -13,15 +13,17 @@ public class AddFlight implements  Command {
     private final LocalDate departureDate;
     private final int capacity;
     private final double price;
+    private final double cancellationRebookFee;
     
     
-    public AddFlight(String flightNumber, String origin, String destination, LocalDate departureDate, int capacity, double price) {
+    public AddFlight(String flightNumber, String origin, String destination, LocalDate departureDate, int capacity, double price, double cancellationRebookFee) {
         this.flightNumber = flightNumber;
         this.origin = origin;
         this.destination = destination;
         this.departureDate = departureDate;
         this.capacity = capacity;
         this.price = price;
+        this.cancellationRebookFee = cancellationRebookFee;
     }
     
     @Override
@@ -32,7 +34,7 @@ public class AddFlight implements  Command {
             maxId = flightBookingSystem.getFlights().get(lastIndex).getId();
         }
         
-        Flight flight = new Flight(++maxId, flightNumber, origin, destination, departureDate,capacity, price, 1);
+        Flight flight = new Flight(++maxId, flightNumber, origin, destination, departureDate,capacity, price, cancellationRebookFee, 1);
         flightBookingSystem.addFlight(flight);
         System.out.println("Flight #" + flight.getId() + " added.");
     }

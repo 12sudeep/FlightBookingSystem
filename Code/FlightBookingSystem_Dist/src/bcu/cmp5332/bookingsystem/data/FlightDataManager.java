@@ -29,11 +29,12 @@ public class FlightDataManager implements DataManager {
                     LocalDate departureDate = LocalDate.parse(properties[4]);
                     int capacity = Integer.parseInt(properties[5]);
                     double price = Double.parseDouble(properties[6]);
-                    int status = Integer.parseInt(properties[7]);
+                    double cancellationRebookFee = Double.parseDouble(properties[7]);
+                    int status = Integer.parseInt(properties[8]);
                     
                     
                     
-                    Flight flight = new Flight(id, flightNumber, origin, destination, departureDate, capacity, price, status);
+                    Flight flight = new Flight(id, flightNumber, origin, destination, departureDate, capacity, price, cancellationRebookFee, status);
                     fbs.addFlight(flight);
                 } catch (NumberFormatException ex) {
                     throw new FlightBookingSystemException("Unable to parse book id " + properties[0] + " on line " + line_idx
@@ -55,6 +56,7 @@ public class FlightDataManager implements DataManager {
                 out.print(flight.getDepartureDate() + SEPARATOR);
                 out.print(flight.getCapacity() + SEPARATOR);
                 out.print(flight.getPrice() + SEPARATOR);
+                out.print(flight.getCancellationRebookFee() + SEPARATOR);
                 out.print(flight.getStatus() + SEPARATOR);
                 out.println();
             }
