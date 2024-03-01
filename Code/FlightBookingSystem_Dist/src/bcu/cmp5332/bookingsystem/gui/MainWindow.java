@@ -8,6 +8,8 @@ import bcu.cmp5332.bookingsystem.model.Customer;
 import bcu.cmp5332.bookingsystem.main.FlightBookingSystemException;
 import bcu.cmp5332.bookingsystem.model.Flight;
 import bcu.cmp5332.bookingsystem.model.FlightBookingSystem;
+
+import java.awt.MediaTracker;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -16,7 +18,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -73,10 +77,21 @@ public class MainWindow extends JFrame implements ActionListener {
         }
 
         setTitle("Flight Booking Management System");
-
+        
         menuBar = new JMenuBar();
         setJMenuBar(menuBar);
 
+        
+//        adding image to homepage
+        ImageIcon imageIcon = new ImageIcon("./resources/images/Homepage.png"); 
+        if (imageIcon.getImageLoadStatus() == MediaTracker.ERRORED) {
+            System.err.println("Error loading image");
+        } else {
+            JLabel imageLabel = new JLabel(imageIcon);
+            this.getContentPane().add(imageLabel);
+        }
+        
+        
         //adding adminMenu menu and menu items
         adminMenu = new JMenu("Admin");
         menuBar.add(adminMenu);
