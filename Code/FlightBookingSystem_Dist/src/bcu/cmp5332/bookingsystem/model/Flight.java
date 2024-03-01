@@ -143,7 +143,10 @@ public class Flight {
         return details.toString();
     }
 
-    public void addPassenger(Customer passenger) {
+    public void addPassenger(Customer passenger) throws FlightBookingSystemException {
+        if (passengers.size() >= capacity) {
+            throw new FlightBookingSystemException("Flight is at full capacity. No more bookings can be made.");
+        }
         passengers.add(passenger);
     }
 

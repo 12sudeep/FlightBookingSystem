@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class FlightTest {
 
     @Test
-    public void testAddPassenger() {
+    public void testAddPassenger() throws FlightBookingSystemException {
         Customer customer1 = new Customer(1, "John Doe", "john@example.com", "123456789");
         Customer customer2 = new Customer(2, "Jane Doe", "jane@example.com", "987654321");
         LocalDate departureDate = LocalDate.of(2024, 2, 15);
@@ -53,7 +53,7 @@ public class FlightTest {
     }
 
     @Test
-    public void testGetDetailsLong() {
+    public void testGetDetailsLong() throws FlightBookingSystemException {
         Customer customer = new Customer(1, "John Doe", "john@example.com", "123456789");
         LocalDate departureDate = LocalDate.of(2024, 2, 15);
         Flight flight = new Flight(1, "FL123", "New York", "London", departureDate, 150, 500.00);
