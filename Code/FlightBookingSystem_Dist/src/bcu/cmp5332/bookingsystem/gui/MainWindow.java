@@ -199,7 +199,7 @@ public class MainWindow extends JFrame implements ActionListener {
         	new UpdateFlightWindow(this, fbs);
             
         } else if (ae.getSource() == bookingsCancel) {
-        	new CancelBookingWindow(this);
+        	new CancelBookingWindow(this, fbs);
             
         } else if (ae.getSource() == custView) {
         	displayCustomers();

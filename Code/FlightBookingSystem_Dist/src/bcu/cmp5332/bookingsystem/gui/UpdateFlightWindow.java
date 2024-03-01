@@ -78,11 +78,19 @@ public class UpdateFlightWindow extends JFrame implements ActionListener {
                 Customer newCustomer = fbs.getCustomerByID(newCustomerId);
                 Flight newFlight = fbs.getFlightByID(newFlightId);
                 
-                // Update booking with new customer ID and flight ID
-                booking.setCustomer(newCustomer);
-                booking.setFlight(newFlight);
-
-                JOptionPane.showMessageDialog(this, "Booking updated successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                // Get rebooking fee from the new flight
+                double rebookingFee = newFlight.getCancellationRebookFee();
+                
+                // Show confirmation dialog with rebooking fee
+                int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to rebook this flight?\nRebooking Fee: $" + rebookingFee, "Confirmation", JOptionPane.YES_NO_OPTION);
+                
+                if (confirm == JOptionPane.YES_OPTION) {
+                    // Update booking with new customer ID and flight ID
+                    booking.setCustomer(newCustomer);
+                    booking.setFlight(newFlight);
+    
+                    JOptionPane.showMessageDialog(this, "Booking updated successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
         } catch (NumberFormatException nfe) {
             JOptionPane.showMessageDialog(this, "Customer ID and Flight ID must be valid integers", "Error", JOptionPane.ERROR_MESSAGE);
