@@ -92,7 +92,7 @@ public class DeleteFlightWindow extends JFrame implements ActionListener {
                 deleteFlight.execute(mw.getFlightBookingSystem());
 
                 // Refresh the view with the list of flights
-                mw.displayFlights();
+                mw.displayAllFlights();
 
                 // Hide (close) the DeleteFlightWindow
                 this.setVisible(false);

@@ -1,5 +1,7 @@
 package bcu.cmp5332.bookingsystem.gui;
 
+import java.time.LocalDate;
+
 import bcu.cmp5332.bookingsystem.data.FlightBookingSystemData;
 import bcu.cmp5332.bookingsystem.model.Booking;
 import bcu.cmp5332.bookingsystem.model.Customer;
@@ -33,7 +35,8 @@ public class MainWindow extends JFrame implements ActionListener {
 
     private JMenuItem adminExit;
 
-    private JMenuItem flightsView;
+    private JMenuItem flightsViewAll;
+    private JMenuItem flightsViewFuture;
     private JMenuItem flightsAdd;
     private JMenuItem flightsDel;
     
@@ -86,10 +89,12 @@ public class MainWindow extends JFrame implements ActionListener {
         flightsMenu = new JMenu("Flights");
         menuBar.add(flightsMenu);
 
-        flightsView = new JMenuItem("View");
+        flightsViewAll = new JMenuItem("View all flights");
+        flightsViewFuture = new JMenuItem("View future flights");
         flightsAdd = new JMenuItem("Add");
         flightsDel = new JMenuItem("Delete");
-        flightsMenu.add(flightsView);
+        flightsMenu.add(flightsViewAll);
+        flightsMenu.add(flightsViewFuture);
         flightsMenu.add(flightsAdd);
         flightsMenu.add(flightsDel);
         // adding action listener for Flights menu items
@@ -159,8 +164,11 @@ public class MainWindow extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(this, ex, "Error", JOptionPane.ERROR_MESSAGE);
             }
             System.exit(0);
-        } else if (ae.getSource() == flightsView) {
-            displayFlights();
+        } else if (ae.getSource() == flightsViewAll) {
+            displayAllFlights();
+            
+        } else if (ae.getSource() == flightsViewFuture) {
+            displayFutureFlights();
             
         } else if (ae.getSource() == flightsAdd) {
             new AddFlightWindow(this);
@@ -187,7 +195,7 @@ public class MainWindow extends JFrame implements ActionListener {
     }
     
   
-    public void displayFlights() {
+    public void displayAllFlights() {
         List<Flight> flightsList = fbs.getFlights();
         
         // Filter flights whose status is 1
@@ -225,6 +233,53 @@ public class MainWindow extends JFrame implements ActionListener {
                     }
                 }
             
+        });
+
+        this.getContentPane().removeAll();
+        this.getContentPane().add(new JScrollPane(table));
+        this.revalidate();
+    }
+    
+    public void displayFutureFlights() {
+        List<Flight> flightsList = fbs.getFlights();
+
+        // Get the current system date
+        LocalDate systemDate = LocalDate.now();
+
+        // Filter flights whose status is 1 and departure date is in the future
+        flightsList = flightsList.stream()
+                                 .filter(flight -> flight.getStatus() == 1 && flight.getDepartureDate().isAfter(systemDate))
+                                 .collect(Collectors.toList());
+
+        // headers for the table
+        String[] columns = new String[]{"ID", "Flight No", "Origin", "Destination", "Departure Date", "Maximum Capacity", "Price"};
+
+        Object[][] data = new Object[flightsList.size()][7];
+        
+        for (int i = 0; i < flightsList.size(); i++) {
+            Flight flight = flightsList.get(i);
+            data[i][0] = flight.getId();
+            data[i][1] = flight.getFlightNumber();
+            data[i][2] = flight.getOrigin();
+            data[i][3] = flight.getDestination();
+            data[i][4] = flight.getDepartureDate();
+            data[i][5] = flight.getCapacity();
+            data[i][6] = flight.getPrice();
+        }
+
+        JTable table = new JTable(data, columns);
+        table.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                int selectedRow = table.getSelectedRow();
+                if (selectedRow != -1) {
+                    int flightId = (int) table.getValueAt(selectedRow, 0);
+                    try {
+                        displayPassengersForFlight(flightId);
+                    } catch (FlightBookingSystemException ex) {
+                        JOptionPane.showMessageDialog(MainWindow.this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
         });
 
         this.getContentPane().removeAll();

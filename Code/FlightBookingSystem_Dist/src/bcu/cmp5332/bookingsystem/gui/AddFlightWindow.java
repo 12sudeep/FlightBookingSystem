@@ -107,7 +107,7 @@ public class AddFlightWindow extends JFrame implements ActionListener {
             addFlight.execute(mw.getFlightBookingSystem());
 
             // Refresh the view with the list of flights
-            mw.displayFlights();
+            mw.displayAllFlights();
 
             // Hide (close) the AddFlightWindow
             this.setVisible(false);
