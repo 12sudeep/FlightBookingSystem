@@ -139,12 +139,12 @@ public class MainWindow extends JFrame implements ActionListener {
         custView = new JMenuItem("View");
         custAdd = new JMenuItem("Add");
         custDel = new JMenuItem("Delete");
-        custList = new JMenuItem("List");
+//        custList = new JMenuItem("List");
         
         customersMenu.add(custView);
         customersMenu.add(custAdd);
         customersMenu.add(custDel);
-        customersMenu.add(custList); 
+//        customersMenu.add(custList); 
         
         // adding action listener for Customers menu items
         custView.addActionListener(this);
