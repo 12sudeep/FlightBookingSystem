@@ -180,6 +180,9 @@ public class MainWindow extends JFrame implements ActionListener {
         } else if (ae.getSource() == bookingsIssue) {
             
             
+        } else if (ae.getSource() == bookingsUpdate) {
+        	new UpdateFlightWindow(this, fbs);
+            
         } else if (ae.getSource() == bookingsCancel) {
         	new CancelBookingWindow(this);
             
