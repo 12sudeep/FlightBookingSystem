@@ -1,3 +1,10 @@
+/**
+ * The DeleteCustomerWindow class provides a graphical user interface for deleting a customer.
+ * It allows the user to enter the ID of the customer they want to delete, and prompts for confirmation before deletion.
+ * Upon deletion, it executes the DeleteCustomer command and refreshes the list of customers displayed in the main window.
+ * If any error occurs during the deletion process, appropriate error messages are displayed to the user.
+ */
+
 package bcu.cmp5332.bookingsystem.gui;
 
 import bcu.cmp5332.bookingsystem.commands.Command;
@@ -17,13 +24,19 @@ public class DeleteCustomerWindow extends JFrame implements ActionListener {
     private JButton deleteBtn = new JButton("Delete");
     private JButton cancelBtn = new JButton("Cancel");
 
+    /**
+     * Constructs a DeleteCustomerWindow object.
+     * 
+     * @param mw The reference to the main window of the application.
+     */
     public DeleteCustomerWindow(MainWindow mw) {
         this.mw = mw;
         initialize();
     }
 
     /**
-     * Initialize the contents of the frame.
+     * Initializes the contents of the frame.
+     * Sets up the layout, components, and event listeners for the window.
      */
     private void initialize() {
         setTitle("Delete Customer");
@@ -50,6 +63,13 @@ public class DeleteCustomerWindow extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    /**
+     * Handles the actionPerformed event for the buttons in the window.
+     * If the delete button is clicked, it invokes the deleteCustomer method.
+     * If the cancel button is clicked, it hides the DeleteCustomerWindow.
+     * 
+     * @param ae The ActionEvent object representing the user's action.
+     */
     @Override
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == deleteBtn) {
@@ -59,6 +79,12 @@ public class DeleteCustomerWindow extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Deletes the customer based on the ID entered by the user.
+     * Prompts for confirmation before deletion.
+     * If confirmed, executes the DeleteCustomer command and refreshes the list of customers.
+     * Displays error messages if any error occurs during the deletion process.
+     */
     private void deleteCustomer() {
         try {
             int customerId = Integer.parseInt(customerIdText.getText());
