@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -207,6 +209,11 @@ public class MainWindow extends JFrame implements ActionListener {
     
     public void displayCustomers() {
         List<Customer> customersList = fbs.getCustomers();
+        // Filter customers whose status is 1
+        customersList = customersList.stream()
+                                    .filter(customer -> customer.getStatus() == 1)
+                                    .collect(Collectors.toList());
+
         // headers for the table
         String[] columns = new String[]{"ID", "Name", "Email", "Phone", "Bookings"};
 
@@ -227,11 +234,11 @@ public class MainWindow extends JFrame implements ActionListener {
                 if (selectedRow != -1) {
                     int customerId = (int) table.getValueAt(selectedRow, 0);
                     try {
-						displayBookingDetails(customerId);
-					} catch (FlightBookingSystemException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+                        displayBookingDetails(customerId);
+                    } catch (FlightBookingSystemException e1) {
+                        // Handle FlightBookingSystemException
+                        e1.printStackTrace();
+                    }
                 }
             }
         });
@@ -239,6 +246,7 @@ public class MainWindow extends JFrame implements ActionListener {
         this.getContentPane().add(new JScrollPane(table));
         this.revalidate();
     }
+
     
     public void displayBookingDetails(int customerId) throws FlightBookingSystemException {
         Customer customer = fbs.getCustomerByID(customerId);
