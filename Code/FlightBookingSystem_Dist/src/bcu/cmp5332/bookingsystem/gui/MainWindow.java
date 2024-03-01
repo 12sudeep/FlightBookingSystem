@@ -104,6 +104,7 @@ public class MainWindow extends JFrame implements ActionListener {
         
         // adding Bookings menu and menu items
         bookingsMenu = new JMenu("Bookings");
+        menuBar.add(bookingsMenu);
         
         bookingsIssue = new JMenuItem("Issue");
         bookingsUpdate = new JMenuItem("Update");
@@ -180,7 +181,7 @@ public class MainWindow extends JFrame implements ActionListener {
             
             
         } else if (ae.getSource() == bookingsCancel) {
-            
+        	new CancelBookingWindow(this);
             
         } else if (ae.getSource() == custView) {
         	displayCustomers();
