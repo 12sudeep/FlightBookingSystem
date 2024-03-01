@@ -26,10 +26,11 @@ public class Flight {
     private LocalDate departureDate;
     private int capacity;
     private double price;
+    private int status;
     private final List<Customer> passengers = new ArrayList<>();
 
     public Flight(int id, String flightNumber, String origin, String destination, LocalDate departureDate, int capacity,
-            double price) {
+            double price, int status) {
         this.id = id;
         this.flightNumber = flightNumber;
         this.origin = origin;
@@ -37,6 +38,7 @@ public class Flight {
         this.departureDate = departureDate;
         this.capacity = capacity;
         this.price = price;
+        this.setStatus(status);
     }
 
     public void populate(FlightBookingSystem fbs) throws FlightBookingSystemException {
@@ -157,4 +159,12 @@ public class Flight {
         }
         passengers.remove(passenger);
     }
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
 }

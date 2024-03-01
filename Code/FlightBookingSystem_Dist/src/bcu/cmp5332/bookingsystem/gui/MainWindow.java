@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -164,7 +166,7 @@ public class MainWindow extends JFrame implements ActionListener {
             new AddFlightWindow(this);
             
         } else if (ae.getSource() == flightsDel) {
-            
+        	new DeleteFlightWindow(this);
             
         } else if (ae.getSource() == bookingsIssue) {
             
@@ -179,7 +181,7 @@ public class MainWindow extends JFrame implements ActionListener {
         	new AddCustomerWindow(this);
             
         } else if (ae.getSource() == custDel) {
-            
+        	new DeleteCustomerWindow(this);
             
         }
     }
@@ -187,10 +189,17 @@ public class MainWindow extends JFrame implements ActionListener {
   
     public void displayFlights() {
         List<Flight> flightsList = fbs.getFlights();
-        // headers for the table
-        String[] columns = new String[]{"Flight ID", "Flight No", "Origin", "Destination", "Departure Date"};
+        
+        // Filter flights whose status is 1
+        flightsList = flightsList.stream()
+                                 .filter(flight -> flight.getStatus() == 1)
+                                 .collect(Collectors.toList());
 
-        Object[][] data = new Object[flightsList.size()][5];
+        // headers for the table
+        String[] columns = new String[]{"ID", "Flight No", "Origin", "Destination", "Departure Date", "Maximum Capacity", "Price"};
+
+        Object[][] data = new Object[flightsList.size()][7];
+        
         for (int i = 0; i < flightsList.size(); i++) {
             Flight flight = flightsList.get(i);
             data[i][0] = flight.getId();
@@ -198,6 +207,8 @@ public class MainWindow extends JFrame implements ActionListener {
             data[i][2] = flight.getOrigin();
             data[i][3] = flight.getDestination();
             data[i][4] = flight.getDepartureDate();
+            data[i][5] = flight.getCapacity();
+            data[i][6] = flight.getPrice();
         }
 
         JTable table = new JTable(data, columns);
@@ -219,7 +230,8 @@ public class MainWindow extends JFrame implements ActionListener {
         this.getContentPane().removeAll();
         this.getContentPane().add(new JScrollPane(table));
         this.revalidate();
-    }	
+    }
+	
     
     public void displayPassengersForFlight(int flightId) throws FlightBookingSystemException {
         Flight flight = fbs.getFlightByID(flightId);
@@ -235,6 +247,11 @@ public class MainWindow extends JFrame implements ActionListener {
     
     public void displayCustomers() {
         List<Customer> customersList = fbs.getCustomers();
+        // Filter customers whose status is 1
+        customersList = customersList.stream()
+                                    .filter(customer -> customer.getStatus() == 1)
+                                    .collect(Collectors.toList());
+
         // headers for the table
         String[] columns = new String[]{"ID", "Name", "Email", "Phone", "Bookings"};
 
@@ -255,10 +272,11 @@ public class MainWindow extends JFrame implements ActionListener {
                 if (selectedRow != -1) {
                     int customerId = (int) table.getValueAt(selectedRow, 0);
                     try {
-						displayBookingDetails(customerId);
-					} catch (FlightBookingSystemException e1) {
-						e1.printStackTrace();
-					}
+                        displayBookingDetails(customerId);
+                    } catch (FlightBookingSystemException e1) {
+                        // Handle FlightBookingSystemException
+                        e1.printStackTrace();
+                    }
                 }
             }
         });
@@ -266,6 +284,7 @@ public class MainWindow extends JFrame implements ActionListener {
         this.getContentPane().add(new JScrollPane(table));
         this.revalidate();
     }
+
     
     public void displayBookingDetails(int customerId) throws FlightBookingSystemException {
         Customer customer = fbs.getCustomerByID(customerId);

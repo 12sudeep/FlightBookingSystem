@@ -15,14 +15,16 @@ public class Customer {
     private String name;
     private String phone;
     private String email;
+    private int status;
     private final List<Booking> bookings = new ArrayList<>();
     
     // TODO: implement constructor here
-    public Customer(int id, String name,String phone, String email) {
+    public Customer(int id, String name,String phone, String email, int status) {
     	this.id=id;
     	this.name=name;
     	this.phone=phone;
     	this.email = email;
+    	this.setStatus(status);
     }
     
     public void populate(FlightBookingSystem flightBookingSystem) throws FlightBookingSystemException {
@@ -108,4 +110,12 @@ public class Customer {
 	public void cancelBooking(Booking booking) {
         bookings.remove(booking);
     }
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
 }
