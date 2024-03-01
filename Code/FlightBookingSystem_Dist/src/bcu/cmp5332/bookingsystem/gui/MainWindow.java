@@ -178,7 +178,7 @@ public class MainWindow extends JFrame implements ActionListener {
         	new DeleteFlightWindow(this);
             
         } else if (ae.getSource() == bookingsIssue) {
-            
+        	new IssueBookingWindow(this);
             
         } else if (ae.getSource() == bookingsCancel) {
         	new CancelBookingWindow(this);

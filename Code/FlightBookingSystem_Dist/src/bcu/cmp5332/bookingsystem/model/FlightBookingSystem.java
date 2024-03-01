@@ -97,6 +97,10 @@ public class FlightBookingSystem {
         bookings.remove(booking);
     }
 
+    public LocalDate getCurrentDate() {
+        return LocalDate.now();
+    }
+
     }
     
 
