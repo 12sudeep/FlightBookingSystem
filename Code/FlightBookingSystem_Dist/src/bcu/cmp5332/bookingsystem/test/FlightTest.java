@@ -13,8 +13,8 @@ public class FlightTest {
 
     @Test
     public void testAddPassenger() {
-        Customer customer1 = new Customer(1, "John Doe", "john@example.com", "123456789");
-        Customer customer2 = new Customer(2, "Jane Doe", "jane@example.com", "987654321");
+        Customer customer1 = new Customer(1, "John Doe", "john@example.com", "123456789", 1);
+        Customer customer2 = new Customer(2, "Jane Doe", "jane@example.com", "987654321", 1);
         LocalDate departureDate = LocalDate.of(2024, 2, 15);
         Flight flight = new Flight(1, "FL123", "New York", "London", departureDate, 150, 500.00);
         
@@ -29,7 +29,7 @@ public class FlightTest {
 
     @Test
     public void testRemovePassenger() throws FlightBookingSystemException {
-        Customer customer = new Customer(1, "John Doe", "john@example.com", "123456789");
+        Customer customer = new Customer(1, "John Doe", "john@example.com", "123456789", 1);
         LocalDate departureDate = LocalDate.of(2024, 2, 15);
         Flight flight = new Flight(1, "FL123", "New York", "London", departureDate, 150, 500.00);
         
@@ -45,7 +45,7 @@ public class FlightTest {
 
     @Test(expected = FlightBookingSystemException.class)
     public void testRemoveNonExistentPassenger() throws FlightBookingSystemException {
-        Customer customer = new Customer(1, "John Doe", "john@example.com", "123456789");
+        Customer customer = new Customer(1, "John Doe", "john@example.com", "123456789", 1);
         LocalDate departureDate = LocalDate.of(2024, 2, 15);
         Flight flight = new Flight(1, "FL123", "New York", "London", departureDate, 150, 500.00);
         
@@ -54,7 +54,7 @@ public class FlightTest {
 
     @Test
     public void testGetDetailsLong() {
-        Customer customer = new Customer(1, "John Doe", "john@example.com", "123456789");
+        Customer customer = new Customer(1, "John Doe", "john@example.com", "123456789", 1);
         LocalDate departureDate = LocalDate.of(2024, 2, 15);
         Flight flight = new Flight(1, "FL123", "New York", "London", departureDate, 150, 500.00);
         

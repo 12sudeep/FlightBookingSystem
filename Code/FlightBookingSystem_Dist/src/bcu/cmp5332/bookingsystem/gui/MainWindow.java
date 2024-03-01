@@ -179,7 +179,7 @@ public class MainWindow extends JFrame implements ActionListener {
         	new AddCustomerWindow(this);
             
         } else if (ae.getSource() == custDel) {
-            
+        	new DeleteCustomerWindow(this);
             
         }
     }
