@@ -118,4 +118,21 @@ public class Customer {
 	public void setStatus(int status) {
 		this.status = status;
 	}
+	
+	public String getDetailsLong() {
+	    StringBuilder details = new StringBuilder();
+	    details.append("Customer ID: ").append(id).append("\n");
+	    details.append("Name: ").append(name).append("\n");
+	    details.append("Email: ").append(email).append("\n");
+	    details.append("Phone: ").append(phone).append("\n");
+	    details.append("Number of Bookings: ").append(bookings.size()).append("\n");
+	    details.append("Bookings:\n");
+	    for (Booking booking : bookings) {
+	        details.append(" - Flight: ").append(booking.getFlight().getFlightNumber())
+	               .append(", Departure Date: ").append(booking.getFlight().getDepartureDate())
+	               .append("\n");
+	    }
+	    return details.toString();
+	}
+
 }
