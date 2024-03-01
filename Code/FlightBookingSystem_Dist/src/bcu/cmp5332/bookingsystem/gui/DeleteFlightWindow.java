@@ -18,7 +18,11 @@ import java.awt.event.ActionListener;
 
 public class DeleteFlightWindow extends JFrame implements ActionListener {
 
-    private MainWindow mw;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private MainWindow mw;
     private JTextField flightIdText = new JTextField();
 
     private JButton deleteBtn = new JButton("Delete");

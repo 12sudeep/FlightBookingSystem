@@ -18,7 +18,11 @@ import java.awt.event.ActionListener;
 
 public class DeleteCustomerWindow extends JFrame implements ActionListener {
 
-    private MainWindow mw;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private MainWindow mw;
     private JTextField customerIdText = new JTextField();
 
     private JButton deleteBtn = new JButton("Delete");
