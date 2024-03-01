@@ -237,8 +237,9 @@ public class MainWindow extends JFrame implements ActionListener {
         Flight flight = fbs.getFlightByID(flightId);
         List<Customer> passengers = flight.getPassengers();
         StringBuilder passengerDetails = new StringBuilder();
-        passengerDetails.append("Passengers for Flight ID: ").append(flightId).append("\n");
+        passengerDetails.append("Passengers for Flight ID: ").append(flightId).append("\n\n");
         for (Customer passenger : passengers) {
+        	passengerDetails.append("\n");
         	passengerDetails.append("ID: ").append(passenger.getId()).append(", ");
             passengerDetails.append("Name: ").append(passenger.getName()).append("\n");
         }
@@ -289,13 +290,15 @@ public class MainWindow extends JFrame implements ActionListener {
     public void displayBookingDetails(int customerId) throws FlightBookingSystemException {
         Customer customer = fbs.getCustomerByID(customerId);
         StringBuilder bookingDetails = new StringBuilder();
-        bookingDetails.append("Customer ID: ").append(customer.getId()).append("\n");
+        bookingDetails.append("Customer ID: ").append(customer.getId()).append("\n\n");
         bookingDetails.append("Bookings: \n");
         if (customer.getBookings().isEmpty()) {
+        	bookingDetails.append("\n");
         	bookingDetails.append("No bookings made.");
         } else {
         int bookingNumber = 1;
         for (Booking booking : customer.getBookings()) {
+        	bookingDetails.append("\n");
         	bookingDetails.append(bookingNumber).append(": ").append("\n");
             bookingDetails.append("Flight: ").append(booking.getFlight().getFlightNumber()).append("\n");
             bookingDetails.append("Departure Date: ").append(booking.getFlight().getDepartureDate()).append("\n");
