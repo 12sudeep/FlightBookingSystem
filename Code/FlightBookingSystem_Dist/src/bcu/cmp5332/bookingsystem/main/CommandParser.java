@@ -20,12 +20,11 @@ import java.time.format.DateTimeParseException;
 
 public class CommandParser {
     
-    public static Command parse(String line) throws IOException, FlightBookingSystemException {
+    public static Command parse(String line) throws FlightBookingSystemException {
         try {
             String[] parts = line.split(" ", 3);
             String cmd = parts[0];
 
-            
             if (cmd.equals("addflight")) {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
                 System.out.print("Flight Number: ");
@@ -46,17 +45,17 @@ public class CommandParser {
                 return new AddFlight(flightNumber, origin, destination, departureDate, capacity, price, cancellationRebookFee);
             
             } else if (cmd.equals("addcustomer")) {
-            	BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            	System.out.print("ID: ");
-            	int id = Integer.parseInt(reader.readLine());
-            	System.out.print("Name: ");
-            	String name= reader.readLine();
-            	System.out.print("Phone Number: ");
-            	String phoneNumber= reader.readLine();
-            	System.out.print("Email: ");
-                String email = reader.readLine();
-                return new AddCustomer(id, name, phoneNumber, email);
-                
+                     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                     System.out.print("ID: ");
+                     int id = Integer.parseInt(reader.readLine());
+                     System.out.print("Name: ");
+                     String name = reader.readLine();
+                     System.out.print("Phone Number: ");
+                     String phoneNumber = reader.readLine();
+                     System.out.print("Email: ");
+                     String email = reader.readLine();
+                     return new AddCustomer(id, name, phoneNumber, email);
+          
             } else if (cmd.equals("loadgui")) {
                 return new LoadGUI();
             } else if (parts.length == 1) {
@@ -71,14 +70,11 @@ public class CommandParser {
                 int id = Integer.parseInt(parts[1]);
 
                 if (cmd.equals("showflight")) {
-                	
                 	return new ShowFlight(id);
-                    
                 } else if (cmd.equals("showcustomer")) {
                 	return new ShowCustomer(id);
                 }
             } else if (parts.length == 3) {
-                
                 if (cmd.equals("addbooking")) {
                 	return new AddBooking(Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), LocalDate.now(), 1);
                 } else if (cmd.equals("editbooking")) {
@@ -86,16 +82,16 @@ public class CommandParser {
                     return new CancelBooking(Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));
                 }
             }
-        } catch (NumberFormatException ex) {
-
+        } catch (NumberFormatException | IOException ex) {
+            throw new FlightBookingSystemException("Invalid input. Please provide correct input.");
         }
 
         throw new FlightBookingSystemException("Invalid command.");
     }
     
-    private static LocalDate parseDateWithAttempts(BufferedReader br, int attempts) throws IOException, FlightBookingSystemException {
+    private static LocalDate parseDateWithAttempts(BufferedReader br, int attempts) throws FlightBookingSystemException {
         if (attempts < 1) {
-            throw new IllegalArgumentException("Number of attempts should be higher that 0");
+            throw new IllegalArgumentException("Number of attempts should be higher than 0");
         }
         while (attempts > 0) {
             attempts--;
@@ -105,13 +101,15 @@ public class CommandParser {
                 return departureDate;
             } catch (DateTimeParseException dtpe) {
                 System.out.println("Date must be in YYYY-MM-DD format. " + attempts + " attempts remaining...");
+            } catch (IOException ex) {
+                throw new FlightBookingSystemException("Error reading input. Please try again.");
             }
         }
         
         throw new FlightBookingSystemException("Incorrect departure date provided. Cannot create flight.");
     }
     
-    private static LocalDate parseDateWithAttempts(BufferedReader br) throws IOException, FlightBookingSystemException {
+    private static LocalDate parseDateWithAttempts(BufferedReader br) throws FlightBookingSystemException {
         return parseDateWithAttempts(br, 3);
     }
 }

@@ -70,11 +70,10 @@ public class FlightBookingSystem {
     }
 
     public void addCustomer(Customer customer) throws FlightBookingSystemException {
-        // TODO: implementation here
-    	if (customers.containsKey(customer.getId())) {
-    		throw new IllegalArgumentException("Duplicate customer ID.");
-    	}
-    	customers.put(customer.getId(),customer);
+        if (customers.containsKey(customer.getId())) {
+            throw new FlightBookingSystemException("Duplicate customer ID. Please enter a different ID.");
+        }
+        customers.put(customer.getId(), customer);
     }
     
     public void addBooking(Booking booking) throws FlightBookingSystemException {
@@ -102,6 +101,8 @@ public class FlightBookingSystem {
     }
 
     }
+
+
     
 
 
